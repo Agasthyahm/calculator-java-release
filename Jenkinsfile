@@ -3,6 +3,7 @@ pipeline{
     environment{
         PROJECT_KEY="java-calculator-k8s"
         VERSION="1.0.${env.BUILD_NUMBER}"
+        IMAGE_NAME="calculator-java"
     }
     stages{
         stage('SCM'){
@@ -49,6 +50,20 @@ pipeline{
                     'http', repository: 'maven-releases', version: "${VERSION}"
             }
         }
+        stage('docker image build'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'nexus-cred',usernameVariable: 'NEXUS_USER',passwordVariable: 'NEXUS_PASS')])
+                {  
+                    sh """
+                         docker build \
+                         --build-arg NEXUS_URL=http://16.16.78.48:30003 \
+                         --build-arg NEXUS_USER=$NEXUS_USER \
+                         --build-arg NEXUS_PASS=$NEXUS_PASS \
+                         --build-arg VERSION=${VERSION} \
+                         -t ${IMAGE_NAME}:${VERSION} .
+                     """
+                }
+           }
         }
     }
-  
+}
