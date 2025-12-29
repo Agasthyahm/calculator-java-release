@@ -57,9 +57,11 @@ pipeline{
                 {  
                     sh """
                           whoami
+                          hostname -I
             id
             ls -l /var/run/docker.sock
             docker ps
+            
                      """
                 }
            }
