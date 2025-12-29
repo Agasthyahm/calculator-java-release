@@ -51,7 +51,7 @@ pipeline{
             }
         }
         stage('docker image build'){
-            agant {label 'node3'}
+            agent {label 'node3'}
             steps{
                 withCredentials([usernamePassword(credentialsId: 'nexus-cred',usernameVariable: 'NEXUS_USER',passwordVariable: 'NEXUS_PASS')])
                 {  
