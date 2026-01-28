@@ -57,7 +57,7 @@ pipeline{
                 {  
                     sh """
                          docker build \
-                         --build-arg NEXUS_URL=http://16.170.133.146:30003 \
+                         --build-arg NEXUS_URL=http://13.53.36.247:30003 \
                          --build-arg NEXUS_USER=$NEXUS_USER \
                          --build-arg NEXUS_PASS=$NEXUS_PASS \
                          --build-arg VERSION=${VERSION} \
